@@ -1,0 +1,12 @@
+{
+    "business_name": "Lux Car Wash",
+    "hours": "9am–6pm, Monday to Saturday",
+    "services": [
+      "Interior Detailing",
+      "Exterior Wash",
+      "Full-Service Wax",
+      "Stain Removal"
+    ],
+    "tone": "friendly and professional",
+    "fallback_response": "I'm not sure about that. Please contact customer service directly!"
+  }
