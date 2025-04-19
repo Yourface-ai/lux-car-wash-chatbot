@@ -104,6 +104,13 @@ button {
   animation-delay: 0.4s;
 }
 
+.logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
 @keyframes blink {
   0%, 100% { opacity: 0.2; }
   50% { opacity: 1; }
