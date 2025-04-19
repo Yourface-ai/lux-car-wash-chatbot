@@ -10,7 +10,7 @@ load_dotenv()
 # Initialize Flask app
 app = Flask(__name__, static_folder="static", template_folder="templates")
 
-# Load config from config.json safely
+# Load config.json safely
 try:
     with open("config.json") as f:
         config = json.load(f)
@@ -25,47 +25,42 @@ if not api_key:
 # Initialize OpenAI client
 client = OpenAI(api_key=api_key)
 
-# Build the system prompt from config
+# Build the system prompt from config.json
 def build_system_prompt():
-    prompt = f"""
-You are a helpful assistant for {config.get('business_name', 'our business')}.
-You help users with questions related to our services and operations.
+    business_name = config.get('business_name', 'our business')
+    services = "\n".join(config.get("services", []))
+    hours = config.get('hours', 'N/A')
+    location = config.get('location', 'N/A')
+    contact = config.get('contact_info', {})
+    tone = config.get('tone', 'friendly')
+    fallback = config.get('fallback_response', 'I am not sure. Please contact us directly.')
+    offers = config.get('offers', 'None')
 
-Business hours: {config.get('hours', 'N/A')}
-Location: {config.get('location', 'N/A')}
-Services:
-- {'\n- '.join(config.get('services', []))}
+    prompt = (
+        f"You are a helpful assistant for {business_name}.\n"
+        f"You help users with the following services:\n{services}\n\n"
+        f"Business hours: {hours}\n"
+        f"Location: {location}\n"
+        f"Contact info: Phone - {contact.get('phone', 'N/A')}, Email - {contact.get('email', 'N/A')}\n"
+        f"Tone: {tone}\n\n"
+        f"If unsure how to answer, say: \"{fallback}\"\n"
+        f"Promotions: {offers}\n"
+    )
 
-Contact info:
-- Phone: {config.get('contact_info', {}).get('phone', 'N/A')}
-- Email: {config.get('contact_info', {}).get('email', 'N/A')}
-
-Tone: {config.get('tone', 'friendly')}
-
-If you don't know the answer, say: "{config.get('fallback_response', 'I am not sure. Please contact us directly.')}"
-
-Current promotions: {config.get('offers', 'None')}
-Pricing: {config.get('pricing_info', 'Please contact us for pricing.')}
-Book here: {config.get('appointment_link', 'No booking link available.')}
-
-Staff:
-- {'\n- '.join(config.get('staff', []))}
-
-Notes: {config.get('special_notes', 'No additional notes.')}
-
-Example questions and answers:
-"""
-    for item in config.get("faq_examples", []):
-        prompt += f"\nQ: {item['q']}\nA: {item['a']}"
+    faq_examples = config.get("faq_examples", [])
+    if faq_examples:
+        prompt += "\nHere are some example questions and answers:\n"
+        for item in faq_examples:
+            prompt += f"Q: {item['q']}\nA: {item['a']}\n"
 
     return prompt.strip()
 
-# Serve chatbot UI
+# Route to serve the chatbot UI
 @app.route("/")
 def index():
     return render_template("index.html")
 
-# Handle chat API
+# Route to handle chat API
 @app.route("/chat", methods=["POST"])
 def chat():
     try:
@@ -73,10 +68,11 @@ def chat():
         user_message = data.get("message")
 
         if not user_message:
-            return jsonify({"error": "No message provided."}), 400
+            return jsonify({"error": "No message provided"}), 400
 
         system_prompt = build_system_prompt()
 
+        # Send message to OpenAI
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
@@ -91,6 +87,6 @@ def chat():
     except Exception as e:
         return jsonify({"error": f"Something went wrong: {str(e)}"}), 500
 
-# Run the app locally
+# Run the app
 if __name__ == "__main__":
     app.run(debug=True)
