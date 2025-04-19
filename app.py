@@ -28,13 +28,15 @@ if not api_key:
 
 # Initialize OpenAI client
 client = OpenAI(api_key=api_key)
+services = config.get("services", [])
+services_formatted = "\n".join(services)
 
 # Build the system prompt from config.json
 def build_system_prompt():
     prompt = f"""
 You are a helpful assistant for {config.get('business_name', 'our business')}.
 You help users with:
-- {"\n- ".join(config.get('services', []))}
+{services_formatted}
 
 Business hours: {config.get('hours', 'N/A')}
 Location: {config.get('location', 'N/A')}
