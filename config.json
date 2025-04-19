@@ -1,29 +1,36 @@
 {
     "business_name": "Lux Car Wash",
     "hours": "9am–6pm, Monday to Saturday",
+    "location": "123 Shine Blvd, Menlo Park, CA",
     "services": [
       "Interior Detailing",
       "Exterior Wash",
       "Full-Service Wax",
       "Stain Removal"
     ],
-    "tone": "friendly and professional",
-    "location": "123 Main Street, Menlo Park, CA",
     "contact_info": {
-      "phone": "(555) 123-4567",
-      "email": "info@luxcarwash.com"
+      "phone": "(123) 456-7890",
+      "email": "support@luxcarwash.com"
     },
-    "auto_intro": "Welcome to Lux Car Wash! How can I help you shine today?",
-    "fallback_response": "I'm not sure about that. Please give us a call!",
-    "offers": "This week only: 15% off Full-Service Wax!",
+    "tone": "friendly and professional",
+    "offers": "20% off for first-time customers",
+    "fallback_response": "I'm not sure about that. Please contact our team directly.",
     "faq_examples": [
       {
-        "q": "How much is an exterior wash?",
-        "a": "An exterior wash is $25 and takes about 20 minutes."
+        "q": "Do you take walk-ins?",
+        "a": "Yes, we do, but we recommend booking ahead to avoid waiting."
       },
       {
-        "q": "Do I need an appointment?",
-        "a": "No appointment needed for basic services, just drive in!"
+        "q": "How long does a full service wax take?",
+        "a": "About 45 minutes to an hour depending on vehicle size."
       }
-    ]
+    ],
+    "pricing_info": "Basic Wash - $25, Full Detail - $75, Wax - $40",
+    "appointment_link": "https://luxcarwash.com/book",
+    "staff": [
+      "Mike (Owner)",
+      "Sarah (Lead Detailer)",
+      "Jason (Customer Support)"
+    ],
+    "special_notes": "Closed on public holidays. Free Wi-Fi available while you wait!"
   }
