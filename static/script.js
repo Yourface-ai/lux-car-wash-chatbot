@@ -1,37 +1,57 @@
-const form = document.getElementById("chat-form");
-const input = document.getElementById("user-input");
+// static/script.js
+const chatForm = document.getElementById("chat-form");
+const userInput = document.getElementById("user-input");
 const chatBox = document.getElementById("chat-box");
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const userMessage = input.value.trim();
-  if (!userMessage) return;
+const sendSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-modern-technology-select-3124.mp3");
 
-  appendMessage("user", userMessage);
-  input.value = "";
+chatForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const message = userInput.value.trim();
+  if (!message) return;
+
+  appendMessage("You", message, "user");
+  userInput.value = "";
+
+  appendTypingEffect("Lux Assistant");
 
   try {
-    const res = await fetch("/chat", {
+    const response = await fetch("/chat", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: userMessage }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message }),
     });
 
-    const data = await res.json();
-    if (data.response) {
-      appendMessage("bot", data.response);
-    } else {
-      appendMessage("bot", "Sorry, something went wrong.");
-    }
-  } catch (err) {
-    appendMessage("bot", "Error connecting to server.");
+    const data = await response.json();
+    removeTypingEffect();
+    appendMessage("Lux Assistant", data.response, "bot");
+  } catch (error) {
+    removeTypingEffect();
+    appendMessage("Lux Assistant", "Oops, something went wrong.", "bot");
   }
 });
 
-function appendMessage(role, text) {
-  const msg = document.createElement("div");
-  msg.classList.add("message", role);
-  msg.textContent = text;
-  chatBox.appendChild(msg);
+function appendMessage(sender, message, type) {
+  const bubble = document.createElement("div");
+  bubble.className = `message ${type}`;
+  bubble.innerHTML = `<strong>${sender}:</strong> ${message}`;
+  chatBox.appendChild(bubble);
   chatBox.scrollTop = chatBox.scrollHeight;
+  sendSound.play();
+}
+
+function appendTypingEffect(sender) {
+  const typing = document.createElement("div");
+  typing.className = "message bot typing";
+  typing.id = "typing";
+  typing.innerHTML = `<strong>${sender}:</strong> <span class="dots"><span>.</span><span>.</span><span>.</span></span>`;
+  chatBox.appendChild(typing);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function removeTypingEffect() {
+  const typing = document.getElementById("typing");
+  if (typing) typing.remove();
 }

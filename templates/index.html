@@ -2,19 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lux Car Wash Assistant</title>
   <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
   <div class="chat-container">
-    <div class="header">🧼 Lux Car Wash Assistant</div>
+    <header class="chat-header">
+      <img src="/static/bubble-icon.svg" alt="Assistant Icon" class="chat-icon" />
+      <h1>Lux Car Wash Assistant</h1>
+    </header>
     <div id="chat-box" class="chat-box"></div>
-    <form id="chat-form" class="input-area">
-      <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off" required />
+    <form id="chat-form" class="chat-form">
+      <input type="text" id="user-input" placeholder="Ask me anything..." autocomplete="off" />
       <button type="submit">Send</button>
     </form>
   </div>
+
+  <!-- Typing sound -->
+  <audio id="send-sound" src="/static/swoosh.mp3" preload="auto"></audio>
 
   <script src="/static/script.js"></script>
 </body>

@@ -1,8 +1,9 @@
+/* static/style.css */
 body {
   margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f3f6f9;
+  font-family: "Helvetica Neue", sans-serif;
+  background-color: #000;
+  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,75 +11,100 @@ body {
 }
 
 .chat-container {
-  width: 100%;
-  max-width: 500px;
-  background: white;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  border-radius: 10px;
+  width: 400px;
+  max-height: 90vh;
+  background: #121212;
+  border-radius: 20px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
 }
 
 .header {
-  background-color: #3eb5d1;
-  color: white;
-  font-size: 1.3em;
-  font-weight: bold;
+  background: #1e1e1e;
   padding: 1rem;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.chat-box {
+.header img {
+  width: 32px;
+  height: 32px;
+}
+
+.header h1 {
+  font-size: 1.2rem;
+  color: #00d8ff;
+  margin: 0;
+}
+
+#chat-box {
   flex: 1;
   padding: 1rem;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.75rem;
 }
 
 .message {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
   max-width: 80%;
-  padding: 10px 15px;
-  border-radius: 20px;
-  font-size: 0.95em;
   line-height: 1.4;
   word-wrap: break-word;
 }
 
-.user {
+.message.user {
   align-self: flex-end;
-  background-color: #d1f0d1;
+  background: #333;
+  color: #fff;
 }
 
-.bot {
+.message.bot {
   align-self: flex-start;
-  background-color: #e5e5e5;
+  background: #00d8ff;
+  color: #000;
 }
 
-.input-area {
+form {
   display: flex;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #333;
 }
 
 input[type="text"] {
   flex: 1;
-  padding: 1rem;
+  padding: 0.75rem;
   border: none;
-  font-size: 1em;
+  outline: none;
+  background: #1e1e1e;
+  color: #fff;
 }
 
 button {
-  padding: 1rem;
-  background-color: #3eb5d1;
-  color: white;
+  padding: 0 1.5rem;
+  background: #00d8ff;
   border: none;
+  color: #000;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s ease;
 }
 
-button:hover {
-  background-color: #35a0b9;
+.typing .dots span {
+  animation: blink 1.5s infinite ease-in-out;
+}
+
+.typing .dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing .dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
 }
