@@ -87,6 +87,13 @@ def chat():
     except Exception as e:
         return jsonify({"error": f"Something went wrong: {str(e)}"}), 500
 
+
+
+    
+@app.route("/admin", methods=["GET"])
+def admin():
+    return render_template("admin.html", config=config)
+
 # Run the app
 if __name__ == "__main__":
     app.run(debug=True)

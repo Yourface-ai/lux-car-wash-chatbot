@@ -115,3 +115,66 @@ button {
   0%, 100% { opacity: 0.2; }
   50% { opacity: 1; }
 }
+/* Admin Mode Styles */
+body.admin-mode {
+  background-color: #0e0e0e;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  padding: 2rem;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.back-link {
+  color: #90cdf4;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.admin-container {
+  max-width: 700px;
+  margin: auto;
+  background: #1a1a1a;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
+}
+
+.admin-form section {
+  margin-bottom: 2rem;
+}
+
+.admin-form input,
+.admin-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background: #121212;
+  color: white;
+}
+
+.admin-form h2 {
+  margin-bottom: 0.5rem;
+}
+
+.admin-form button {
+  background: #38bdf8;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  color: black;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.admin-form button:hover {
+  background: #0ea5e9;
+}

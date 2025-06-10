@@ -1,0 +1,73 @@
+<!-- templates/admin.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body class="admin-mode">
+  <header class="admin-header">
+    <h1>🛠️ Admin Dashboard</h1>
+    <a href="/" class="back-link">← Return to Chatbot</a>
+  </header>
+
+  <main class="admin-container">
+    <form action="/update-config" method="POST" class="admin-form">
+      <section>
+        <h2>Business Info</h2>
+        <input type="text" name="business_name" value="{{ config['business_name'] }}" placeholder="Business Name" required />
+        <input type="text" name="hours" value="{{ config['hours'] }}" placeholder="Hours (e.g. 9am–6pm, Mon–Sat)" />
+        <input type="text" name="location" value="{{ config.get('location', '') }}" placeholder="Location" />
+      </section>
+
+      <section>
+        <h2>Contact Info</h2>
+        <input type="text" name="phone" value="{{ config['contact_info']['phone'] }}" placeholder="Phone" />
+        <input type="email" name="email" value="{{ config['contact_info']['email'] }}" placeholder="Email" />
+      </section>
+
+      <section>
+        <h2>Style & Fallback</h2>
+        <input type="text" name="tone" value="{{ config['tone'] }}" placeholder="Tone (e.g. friendly, professional)" />
+        <input type="text" name="fallback_response" value="{{ config['fallback_response'] }}" placeholder="Fallback Response" />
+      </section>
+
+      <section>
+        <h2>Promotions / Offers</h2>
+        <textarea name="offers" rows="2" placeholder="Promotional message...">{{ config.get('offers', '') }}</textarea>
+        <section>
+            <h2>Frequently Asked Questions (FAQs)</h2>
+            <div id="faq-list">
+              {% for item in config['faq_examples'] %}
+                <div class="faq-item">
+                  <input type="text" name="faq_q_{{ loop.index0 }}" value="{{ item.q }}" placeholder="Question" />
+                  <input type="text" name="faq_a_{{ loop.index0 }}" value="{{ item.a }}" placeholder="Answer" />
+                </div>
+              {% endfor %}
+            </div>
+          
+            <button type="button" onclick="addFAQ()">➕ Add FAQ</button>
+          </section>
+
+      <button type="submit">💾 Save Settings</button>
+    </form>
+  </main>
+  <script>
+    let faqCount = parseInt("{{ config['faq_examples'] | length }}");
+  
+    function addFAQ() {
+      const container = document.getElementById("faq-list");
+      const div = document.createElement("div");
+      div.classList.add("faq-item");
+      div.innerHTML = `
+        <input type="text" name="faq_q_${faqCount}" placeholder="Question" />
+        <input type="text" name="faq_a_${faqCount}" placeholder="Answer" />
+      `;
+      container.appendChild(div);
+      faqCount++;
+    }
+  </script>
+</body>
+</html>
